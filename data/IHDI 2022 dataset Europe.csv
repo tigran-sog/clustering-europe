@@ -1,0 +1,43 @@
+﻿Country,ShortName,PopBelow100k,HDI,IHDI,Inequality-loss,UN_Geoscheme,EuroVoc,Cold_War,Personal
+Ireland,Ireland,,0.950,0.886,6.7,Northern,Western,Western,Western
+United Kingdom,UK,,0.940,0.865,8.0,Northern,Western,Western,Western
+Switzerland,Switzerland,,0.967,0.891,7.9,Western,Western,Western,Western
+Germany,Germany,,0.950,0.881,7.3,Western,Western,Western,Western
+Netherlands,Netherlands,,0.946,0.885,6.4,Western,Western,Western,Western
+Belgium,Belgium,,0.942,0.878,6.8,Western,Western,Western,Western
+Liechtenstein,Liechtenstein,y,0.942,..,..,Western,Western,Western,Western
+Luxembourg,Luxembourg,,0.927,0.839,9.5,Western,Western,Western,Western
+Austria,Austria,,0.926,0.859,7.2,Western,Western,Western,Western
+France,France,,0.910,0.820,9.9,Western,Western,Western,Western
+Malta,Malta,,0.915,0.837,8.5,Southern,Southern,Western,Southern
+Spain,Spain,,0.911,0.796,12.6,Southern,Southern,Western,Southern
+Italy,Italy,,0.906,0.802,11.5,Southern,Southern,Western,Southern
+Greece,Greece,,0.893,0.801,10.3,Southern,Southern,Western,Southern
+Portugal,Portugal,,0.874,0.774,11.4,Southern,Southern,Western,Southern
+San Marino,San Marino,y,0.867,..,..,Southern,Southern,Western,Southern
+Andorra,Andorra,y,0.884,0.810,8.4,Southern,Western,Western,Southern
+Romania,Romania,,0.827,0.739,10.6,Eastern,Central and Eastern,Eastern,South-East
+Bulgaria,Bulgaria,,0.799,0.703,12.0,Eastern,Central and Eastern,Eastern,South-East
+Croatia,Croatia,,0.878,0.817,6.9,Southern,Central and Eastern,Eastern,South-East
+Montenegro,Montenegro,,0.844,0.756,10.4,Southern,Central and Eastern,Eastern,South-East
+Serbia,Serbia,,0.805,0.740,8.1,Southern,Central and Eastern,Eastern,South-East
+Albania,Albania,,0.789,0.687,12.9,Southern,Central and Eastern,Eastern,South-East
+Bosnia and Herzegovina,Bosnia and Herzegovina,,0.779,0.667,14.4,Southern,Central and Eastern,Eastern,South-East
+North Macedonia,North Macedonia,,0.765,0.679,11.2,Southern,Central and Eastern,Eastern,South-East
+Norway,Norway,,0.966,0.903,6.5,Northern,Northern,Western,Northern
+Iceland,Iceland,,0.959,0.910,5.1,Northern,Northern,Western,Northern
+Denmark,Denmark,,0.952,0.898,5.7,Northern,Northern,Western,Northern
+Sweden,Sweden,,0.952,0.878,7.8,Northern,Northern,Western,Northern
+Finland,Finland,,0.942,0.886,5.9,Northern,Northern,Western,Northern
+Moldova (Republic of),Moldova,,0.763,0.698,8.5,Eastern,Central and Eastern,Eastern,North-East
+Ukraine,Ukraine,,0.734,0.676,7.9,Eastern,Central and Eastern,Eastern,North-East
+Russian Federation,Russia,,0.821,0.747,9.0,Eastern,Central and Eastern,Eastern,North-East
+Belarus,Belarus,,0.801,0.750,6.4,Eastern,Central and Eastern,Eastern,North-East
+Czechia,Czechia,,0.895,0.848,5.3,Eastern,Central and Eastern,Eastern,Central-East
+Poland,Poland,,0.881,0.797,9.5,Eastern,Central and Eastern,Eastern,Central-East
+Slovakia,Slovakia,,0.855,0.808,5.5,Eastern,Central and Eastern,Eastern,Central-East
+Hungary,Hungary,,0.851,0.800,6.0,Eastern,Central and Eastern,Eastern,Central-East
+Slovenia,Slovenia,,0.926,0.882,4.8,Southern,Central and Eastern,Eastern,Central-East
+Estonia,Estonia,,0.899,0.835,7.1,Northern,Northern,Eastern,Central-East
+Latvia,Latvia,,0.879,0.802,8.8,Northern,Northern,Eastern,Central-East
+Lithuania,Lithuania,,0.879,0.795,9.6,Northern,Northern,Eastern,Central-East
