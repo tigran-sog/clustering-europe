@@ -8,22 +8,17 @@ Created on Tue May  7 20:30:21 2024
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from copy import copy
-import random
-from scipy.stats import pearsonr
-
 import seaborn as sns
-import matplotlib.pyplot as plt
-
 import os
-
 import re
+from IPython.display import display
+
 
 
 
 # Import and clean the data
 df = (
-    pd.read_csv('IHDI 2022 dataset Europe.csv')   # Import dataframe
+    pd.read_csv('data/IHDI 2022 dataset Europe.csv')   # Import dataframe
     .query("`Inequality-loss` != '..'")          # Filter out rows where 'Inequality-loss' is '..'
     .query("`PopBelow100k` != 'y'")              # Further filter out rows where 'PopBelow100k' is 'y'
 )
@@ -33,8 +28,7 @@ df = (
 ## View
 df.head()
 print(df.dtypes) # We see that "Inequality-loss" column needs to be converted into float
-
-df['Inequality-loss'] = df['Inequality-loss'].astype(float)
+df['Inequality-loss'] = df['Inequality-loss'].astype(float) # Convert to float
 
 # EDA
 ## Summary stats
@@ -61,11 +55,6 @@ df['JitteredY'] = df['Inequality-loss'] + np.random.uniform(-.2, .2, size=len(df
 ## Set the font family globally
 plt.rcParams['font.family'] = 'Segoe UI'  # Examples of font families: 'serif', 'sans-serif', 'monospace'
 
-## Ensure a directory exists to save plot images to
-directory = f'./ihdi loss viz/'
-if not os.path.exists(directory):
-    os.makedirs(directory)
-
 
 ## Function to plot European countries by the two variables, coloured by specified cluster set
 def cluster_plot(df, cluster_set):
@@ -84,7 +73,7 @@ def cluster_plot(df, cluster_set):
 
     
     # Choose a color palette with good contrast
-    palette = sns.color_palette("colorblind", n_colors=k_value)
+    palette = sns.color_palette("tab10", n_colors=k_value)
 
     # Create the plot
     plt.style.use("fivethirtyeight")
@@ -101,7 +90,7 @@ def cluster_plot(df, cluster_set):
         alpha=0.6,
         legend='full'
     )
-    plt.title(title, fontsize = 60, pad = 50, loc = 'left')
+    plt.title(title, fontsize = 60, pad = 50, loc = 'left', fontweight = 'Semibold')
     plt.xlabel('HDI', fontsize = 50, labelpad = 30)
     plt.ylabel('IHDI Overall loss (%)', fontsize = 50, labelpad = 30)
     
@@ -116,10 +105,10 @@ def cluster_plot(df, cluster_set):
                  fontsize=40)  # Adjust label size for better readability
             
     plt.legend(title='Cluster', title_fontsize = 40, fontsize = 30, markerscale = 3,
-               frameon=True, facecolor='#FDF6E3')
+               frameon=True, facecolor='#FCFCFC')
     
     # Define the path to save the file, creating directories if necessary
-    plt.savefig(f'{directory}plot {cluster_set}.png')  # Save the figure
+    plt.savefig('viz/plot {cluster_set}.png')  # Save the figure
 
     plt.show()
 
@@ -128,12 +117,6 @@ def cluster_plot(df, cluster_set):
 for s in schemes:
     cluster_plot(df, cluster_set = s)
 
-# Notes:
-"""
-As you can see, the Cold War division does split the countries quite cleanly along HDI. However, this misses
-out large variation along inequality (many post-communist countries are more equal than several countries which 
-                                      did not have a communist history.)
-"""
 
 
 # Clustering
@@ -219,7 +202,7 @@ plt.ylabel('SSE', fontsize = 50, labelpad = 30)
 plt.axvline(x = kl.elbow, color = "orange", linestyle = "dotted", linewidth = 10) # adding line where elbow point creases
 # Adjust font size of the tick labels
 plt.tick_params(axis='both', which='major', labelsize=30)  # Adjust font size for x and y axes
-plt.savefig(f'{directory}elbow plot.png')  # Save the figure
+plt.savefig('viz/elbow plot.png')  # Save the figure
 plt.show()
 
 
@@ -235,7 +218,7 @@ plt.ylabel('Silhouette Coefficient', fontsize = 50, labelpad = 30)
 plt.axvline(x = sl_max, color = "orange", linestyle = "dotted", linewidth = 10) # adding line where elbow point creases
 # Adjust font size of the tick labels
 plt.tick_params(axis='both', which='major', labelsize=30)  # Adjust font size for x and y axes
-plt.savefig(f'{directory}silhouette score plot.png')  # Save the figure
+plt.savefig('viz/silhouette score plot.png')  # Save the figure
 plt.show()
 
 
@@ -250,3 +233,71 @@ for k in [2,4,6]:
     column_name = f'k{k}'
     df[column_name] = kmeans.labels_  # Append labels as a new column
     cluster_plot(df, column_name)
+    
+# Export European countries table with clustering results
+df.to_csv('data/european clusters.csv', index=False)
+
+
+#### Compare K-means clusters to pre-existing regional divsions
+from sklearn.metrics import adjusted_rand_score, homogeneity_score, completeness_score, v_measure_score
+
+### Remap pre-exisitng divisions to cluster labels
+ColdWar_remap = {'Western': 1,
+            'Eastern': 0}
+
+UN_Geoscheme_remap = {'Northern': 2,
+                      'Western': 1,
+                      'Eastern': 0,
+                      'Southern': 3}
+
+EuroVoc_remap = {'Northern': 3,
+                 'Western': 1,
+                 'Central and Eastern': 0,
+                 'Southern': 2}
+
+Personal_remap = {'Western': 1,
+                  'Southern': 5,
+                  'South-East': 4,
+                  'Northern': 3,
+                  'North-East': 0,
+                  'Central-East': 2}
+
+remap_list = [UN_Geoscheme_remap, EuroVoc_remap, ColdWar_remap, Personal_remap]
+
+df_remap = df
+
+for i in range(0,4):
+    print(i)
+    df_remap.iloc[:,i+8] = np.array([remap_list[i][label] for label in df_remap.iloc[:,i+8]])
+    
+
+### Comparing each K-means cluster set to pre-existing definitions
+
+# Creating a dictionary to correspond the pre-existing definitions with the cluster sets
+comparison_dict = {
+    'UN_Geoscheme': 'k4',
+    'EuroVoc': 'k4',
+    'Cold_War': 'k2',
+    'Personal': 'k6'
+    }
+
+# Initialise a list to store results (to convert later into table)
+comparison_results = []
+
+# Calculate metrics for each definition-cluster set pairing
+for i in comparison_dict:
+    definition = df_remap[comparison_dict[i]]
+    cluster_set = df_remap[i]
+    ari = adjusted_rand_score(definition,cluster_set) # Calculate the Adjusted Rand Index for the pairing
+    homogeneity = homogeneity_score(definition,cluster_set) # Measures if each cluster contains only members of a single class.
+    completeness = completeness_score(definition,cluster_set) # Measures if all members of a given class are assigned to the same cluster.
+    v_measure = v_measure_score(definition,cluster_set) # Harmonic mean of homogeneity and completeness.
+    
+    comparison_results.append({
+        'definition': i, 'cluster_set' : comparison_dict[i],
+        'ari':ari, 'homogeneity': homogeneity, 'completeness': completeness, 'v_measure': v_measure})
+    
+comparison_results_df = pd.DataFrame(comparison_results)
+display(comparison_results_df)
+
+
