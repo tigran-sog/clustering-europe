@@ -11,9 +11,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 import re
-from IPython.display import display
-
-
 
 
 # Import and clean the data
@@ -90,9 +87,9 @@ def cluster_plot(df, cluster_set):
         alpha=0.6,
         legend='full'
     )
-    plt.title(title, fontsize = 60, pad = 50, loc = 'left', fontweight = 'Semibold')
-    plt.xlabel('HDI', fontsize = 50, labelpad = 30)
-    plt.ylabel('IHDI Overall loss (%)', fontsize = 50, labelpad = 30)
+    plt.title(title, fontsize = 70, pad = 50, loc = 'left', fontweight = 'semibold', color = '#171717')
+    plt.xlabel('HDI', fontsize = 60, labelpad = 30, fontweight = 'semibold', color = '#171717')
+    plt.ylabel('IHDI Overall loss (%)', fontsize = 60, labelpad = 30, fontweight = 'semibold', color = '#171717')
     
     # Adjust font size of the tick labels
     plt.tick_params(axis='both', which='major', labelsize=40)  # Adjust font size for x and y axes
@@ -104,11 +101,11 @@ def cluster_plot(df, cluster_set):
         plt.text(x = point['HDI'] + 0.002, y = point['JitteredY'], s = str(point['ShortName']),
                  fontsize=40)  # Adjust label size for better readability
             
-    plt.legend(title='Cluster', title_fontsize = 40, fontsize = 30, markerscale = 3,
+    plt.legend(title='Cluster', title_fontsize = 40, fontsize = 30, markerscale = 3, 
                frameon=True, facecolor='#FCFCFC')
     
     # Define the path to save the file, creating directories if necessary
-    plt.savefig('viz/plot {cluster_set}.png')  # Save the figure
+    plt.savefig(f'viz/plot {cluster_set}.png')  # Save the figure
 
     plt.show()
 
@@ -196,12 +193,12 @@ scatter = sns.lineplot(
 
 #plt.plot(range(1,11), sse, linewidth = 5)
 plt.xticks(range(1,11))
-plt.title('Elbow plot for K-means clustering of European countries', fontsize = 60, pad = 50)
-plt.xlabel('Number of clusters', fontsize = 50, labelpad = 30)
-plt.ylabel('SSE', fontsize = 50, labelpad = 30)
+plt.title('Elbow plot for K-means clustering of European countries', fontsize = 70, pad = 50, fontweight = 'semibold', loc = 'left', color = '#171717')
+plt.xlabel('Number of clusters', fontsize = 60, labelpad = 30, fontweight = 'semibold', color = '#171717')
+plt.ylabel('SSE', fontsize = 60, labelpad = 30, fontweight = 'semibold', color = '#171717')
 plt.axvline(x = kl.elbow, color = "orange", linestyle = "dotted", linewidth = 10) # adding line where elbow point creases
 # Adjust font size of the tick labels
-plt.tick_params(axis='both', which='major', labelsize=30)  # Adjust font size for x and y axes
+plt.tick_params(axis='both', which='major', labelsize=40)  # Adjust font size for x and y axes
 plt.savefig('viz/elbow plot.png')  # Save the figure
 plt.show()
 
@@ -212,12 +209,12 @@ scatter = sns.lineplot(
         x=range(2,11), y=sl_scores, 
         linewidth=10)
 plt.xticks(range(2,11))
-plt.title('Silhouette scores for K-means clustering of European countries', fontsize = 60, pad = 50)
-plt.xlabel('Number of clusters', fontsize = 50, labelpad = 30)
-plt.ylabel('Silhouette Coefficient', fontsize = 50, labelpad = 30)
+plt.title('Silhouette scores for K-means clustering of European countries', color = '#171717', fontsize = 70, pad = 50, fontweight = 'semibold', loc = 'left')
+plt.xlabel('Number of clusters', fontsize = 60, labelpad = 30, fontweight = 'semibold', color = '#171717')
+plt.ylabel('Silhouette Coefficient', fontsize = 60, labelpad = 30, fontweight = 'semibold', color = '#171717')
 plt.axvline(x = sl_max, color = "orange", linestyle = "dotted", linewidth = 10) # adding line where elbow point creases
 # Adjust font size of the tick labels
-plt.tick_params(axis='both', which='major', labelsize=30)  # Adjust font size for x and y axes
+plt.tick_params(axis='both', which='major', labelsize=40)  # Adjust font size for x and y axes
 plt.savefig('viz/silhouette score plot.png')  # Save the figure
 plt.show()
 
@@ -288,16 +285,16 @@ comparison_results = []
 for i in comparison_dict:
     definition = df_remap[comparison_dict[i]]
     cluster_set = df_remap[i]
-    ari = adjusted_rand_score(definition,cluster_set) # Calculate the Adjusted Rand Index for the pairing
-    homogeneity = homogeneity_score(definition,cluster_set) # Measures if each cluster contains only members of a single class.
-    completeness = completeness_score(definition,cluster_set) # Measures if all members of a given class are assigned to the same cluster.
-    v_measure = v_measure_score(definition,cluster_set) # Harmonic mean of homogeneity and completeness.
+    ari = round(adjusted_rand_score(definition,cluster_set),2) # Calculate the Adjusted Rand Index for the pairing
+    homogeneity = round(homogeneity_score(definition,cluster_set),2) # Measures if each cluster contains only members of a single class.
+    completeness = round(completeness_score(definition,cluster_set),2) # Measures if all members of a given class are assigned to the same cluster.
+    v_measure = round(v_measure_score(definition,cluster_set),2) # Harmonic mean of homogeneity and completeness.
     
     comparison_results.append({
         'definition': i, 'cluster_set' : comparison_dict[i],
         'ari':ari, 'homogeneity': homogeneity, 'completeness': completeness, 'v_measure': v_measure})
     
 comparison_results_df = pd.DataFrame(comparison_results)
-display(comparison_results_df)
+print(comparison_results_df.to_markdown(index = False))
 
 
