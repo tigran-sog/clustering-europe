@@ -2,8 +2,7 @@
 
 ![Image: Maps of European countries coloured by my k-means clustering results](viz/cluster_maps.png)
 
-Categorising Europe into regional divisions is as much determined by economic history as it is by geography. Is Greece, a country further east than the Czech Republic, in Western Europe? Popular conceptions rooted in Cold War history would say it is. And what of Estonia? Geographically it could be considered Northern Europe, whereas economically it resembles its western counterparts more than its eastern neighbours. Yet its political history often leads it to be considered a part of Eastern Europe.
-
+Categorising Europe into regional divisions is as much determined by political history as it is by geography. Is Greece, a country further east than the Czech Republic, in Western Europe? Popular conceptions rooted in Cold War history would say it is. And what of Estonia? Geographically it could be considered Northern Europe, whereas economically it resembles its western counterparts more than its eastern neighbours. Yet its five decades as part of the Soviet Union often leads it to be considered a part of Eastern Europe.
 
 If we ignored geographic information, how far can just social and economic factors go in determining a coherent regional classification of European countries? **In this project, we use *k*-means clustering to categorise European countries based on the distribution of  two variables, human development and inequality.** We then compare how the results of our geographically-agnostic, unsupervised clustering methodology align with pre-existing definitions of European regional divisions.
 
@@ -44,7 +43,7 @@ In comparison, let's introduce four ways of categorising the nations of Europe w
 ![Image: Maps of European countries coloured by pre-existing regional divisions of Europe](viz/division_maps.png)
 
 
-We can use quantitiative measures to evaluate how closely our *k*-means clustering results align with these pre-existing regional divisions of Europe. One such measure is the **Adjusted Rand Index (ARI)**. It's a measure of the similarity between the clustering sets and the pre-existing classes we are comparing them to: a value of 1 indicates perfect agreement, whereas a value of -1 indicates perfect disagreement. A second score we can use is the **V-measure**, which looks at both the homogeneity and the completeness of each cluster set, evaluating how well each cluster contains only members of one class (and the opposite).
+We can use quantitiative measures to evaluate how closely our *k*-means clustering results align with these pre-existing regional divisions of Europe. One such measure is the **Adjusted Rand Index (ARI)**. It's a measure of the similarity between the clustering sets and the pre-existing classes we are comparing them to: a value of 1 indicates perfect agreement, whereas a value of -1 indicates perfect disagreement. A second score we can use is the **V-measure**, which looks at both the homogeneity and the completeness of each cluster set, evaluating how well each cluster contains only members of one class - and the opposite.
 
 | Definition   | *k*-means cluster set   |   ARI |   V-measure |
 |:-------------|:--------------|------:|------------:|
@@ -63,6 +62,13 @@ The two four-way definitions, EuroVoc and the UN's Geoscheme, are geographically
 
 The two four-way definitions, EuroVoc and the UN's Geoscheme, also show only a weak agreement with our optimal *k* = 4 clusters. Although they themselves are geographically intuitive, the results indicate that these definitions group together countries with drastically different socioeconomic outcomes. For example, the UN Geoscheme groups much poorer Balkan countries like Serbia, Bosnia and Albania with Spain, Portugal and Italy into a common Southern Europe category. On the other hand, EuroVoc partially replicates the Cold War understanding of Eastern Europe, pooling former Eastern Bloc countries like Czechia and Albania together, despite the gulf in both human development and inequality between them.
 
+## Conclusion
+
+Performing *k*-means clustering on the human development and inequality of European countries brings forth two key findings.
+
+Firstly, we find that commonly used or pre-existing definitions of European regional divisions have a tendency to pool together countries that are not necessarily similar in the level of their development or the distribution of their welfare. This is not surprising given that such definitions are based primarily on geographic, cultural or historical factors over socioeconomic ones. But it does suggest that such cultural or historical factors (like whether the nation experienced communist rule during the 20th century) are not necessarily as determinant of contemporary socioeconomic outcomes as may sometimes be presumed. Within the former Eastern Bloc countries, there is spectrum of socioeconomic standing - from highly developed and equal countries like Czechia and Slovenia, to less developed but equal countries like Belarus and Ukraine, as well as less developed and more unequal countries like Bulgaria and North Macedonia. This may reflect divergences in the economic trajectories of those countries since the end of communism, but may also preserve the effects of historical influences that pre-date communism.
+
+Emerging from this, the second key finding is that there is still a surprising amount of geographic structure in these two socioeconomic variables alone. Countries with similar combinations of human development and inequality tend to neighbour each other, as seen with some of the examples mentioned above. These contiguities are not perfect -- we find that France and some southern European countries persistently cluster with countries on the Baltic coast, like Poland and Lithuania. But a strong spatial autocorrelation is evident ovverall when *k* = 2 or 4. As these geographically contiguous groupings do not necessarily reflect common understandings of the regional divisions of Europe, this invites us to look at the mosaic of 21st century Europe in a different light.
 
 ## Repository
 ### /code/
