@@ -50,7 +50,10 @@ np.random.seed(35)
 df['JitteredY'] = df['Inequality-loss'] + np.random.uniform(-.2, .2, size=len(df))
 
 ## Set the font family globally
-plt.rcParams['font.family'] = 'Segoe UI'  # Examples of font families: 'serif', 'sans-serif', 'monospace'
+from matplotlib import font_manager as fm, rcParams
+font_path = 'C:/WINDOWS/FONTS/TITILLIUMWEB-REGULAR.TTF'  # Update this path to the actual font path
+fm.fontManager.addfont(font_path)
+plt.rcParams['font.family'] = 'Titillium Web'
 
 
 ## Function to plot European countries by the two variables, coloured by specified cluster set
@@ -87,7 +90,7 @@ def cluster_plot(df, cluster_set):
         alpha=0.6,
         legend='full'
     )
-    plt.title(title, fontsize = 70, pad = 50, loc = 'left', fontweight = 'semibold', color = '#171717')
+    plt.title(title, fontsize = 70, pad = 50, loc = 'left', fontweight = 'semibold', color = '#1D5B79')
     plt.xlabel('HDI', fontsize = 60, labelpad = 30, fontweight = 'semibold', color = '#171717')
     plt.ylabel('IHDI Overall loss (%)', fontsize = 60, labelpad = 30, fontweight = 'semibold', color = '#171717')
     
@@ -193,7 +196,7 @@ scatter = sns.lineplot(
 
 #plt.plot(range(1,11), sse, linewidth = 5)
 plt.xticks(range(1,11))
-plt.title('Elbow plot for K-means clustering of European countries', fontsize = 70, pad = 50, fontweight = 'semibold', loc = 'left', color = '#171717')
+plt.title('Elbow plot for k-means clustering of European countries', fontsize = 90, pad = 100, fontweight = 'semibold', loc = 'left', color = '#1D5B79')
 plt.xlabel('Number of clusters', fontsize = 60, labelpad = 30, fontweight = 'semibold', color = '#171717')
 plt.ylabel('SSE', fontsize = 60, labelpad = 30, fontweight = 'semibold', color = '#171717')
 plt.axvline(x = kl.elbow, color = "orange", linestyle = "dotted", linewidth = 10) # adding line where elbow point creases
@@ -209,7 +212,7 @@ scatter = sns.lineplot(
         x=range(2,11), y=sl_scores, 
         linewidth=10)
 plt.xticks(range(2,11))
-plt.title('Silhouette scores for K-means clustering of European countries', color = '#171717', fontsize = 70, pad = 50, fontweight = 'semibold', loc = 'left')
+plt.title('Silhouette scores for k-means clustering of European countries', color = '#1D5B79', fontsize = 90, pad = 100, fontweight = 'semibold', loc = 'left')
 plt.xlabel('Number of clusters', fontsize = 60, labelpad = 30, fontweight = 'semibold', color = '#171717')
 plt.ylabel('Silhouette Coefficient', fontsize = 60, labelpad = 30, fontweight = 'semibold', color = '#171717')
 plt.axvline(x = sl_max, color = "orange", linestyle = "dotted", linewidth = 10) # adding line where elbow point creases

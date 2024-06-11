@@ -14,6 +14,12 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 
+from matplotlib import font_manager as fm, rcParams
+
+# Ensure "Titillium Web" font is available
+font_path = 'C:/WINDOWS/FONTS/TITILLIUMWEB-REGULAR.TTF'  # Update this path to the actual font path
+fm.fontManager.addfont(font_path)
+plt.rcParams['font.family'] = 'Titillium Web'
 
 
 ## Import cluster dataset
@@ -41,11 +47,11 @@ europe_clusters = europe.merge(df, how='left', left_on='NAME_LONG', right_on='Sh
 # Define the number of categories for each map
 num_categories_list = [2, 4, 6]
 
-# Define the base colormap
-base_cmap = plt.get_cmap('Accent')
+# Define the custom colors
+custom_colors = ['#b8d17a', '#deb8fa', '#f6b5b1', '#7adadc', '#E2F426', '#F64050']
 
 # Create custom colormaps for each number of categories
-custom_cmaps = [mcolors.ListedColormap(base_cmap.colors[:num_categories]) for num_categories in num_categories_list]
+custom_cmaps = [mcolors.ListedColormap(custom_colors[:num_categories]) for num_categories in num_categories_list]
 
 # Create subplots
 fig, axes = plt.subplots(1, 3, figsize=(60, 20))
@@ -68,21 +74,22 @@ for ax, column, title, cmap in zip(axes, columns, titles, custom_cmaps):
 
 # Customize the overall plot
 plt.suptitle('Clustering European countries along human development and inequality',
-             fontsize=80, fontweight='semibold', x=0.02, ha='left', color = '#171717', y= 0.99)
+             fontsize=80, fontweight='semibold', x=0.02, ha='left', color = '#1D5B79', y= 0.99)
 plt.tight_layout()
 plt.subplots_adjust(top=0.95)
 plt.savefig('viz/cluster_maps.png')  # Save the figure
 plt.show()
 
-## Maps of pre-existing definitions
+
+### Maps of pre-existing definitions
 # Define the number of categories for each map
 num_categories_list = [2, 4, 4, 6]
 
-# Define the base colormap
-base_cmap = plt.get_cmap('Accent')
+# Define the custom colors
+custom_colors = ['#b8d17a', '#deb8fa', '#f6b5b1', '#7adadc', '#ffcc00', '#ff6666']
 
 # Create custom colormaps for each number of categories
-custom_cmaps = [mcolors.ListedColormap(base_cmap.colors[:num_categories]) for num_categories in num_categories_list]
+custom_cmaps = [mcolors.ListedColormap(custom_colors[:num_categories]) for num_categories in num_categories_list]
 
 # Create subplots
 fig, axes = plt.subplots(2, 2, figsize=(21, 20))
@@ -91,23 +98,23 @@ axes = axes.flatten()
 plt.style.use("fivethirtyeight")
 
 # Plot each cluster column in its respective subplot
-columns = ['Cold_War','EuroVoc','UN_Geoscheme','Personal']
+columns = ['Cold_War', 'EuroVoc', 'UN_Geoscheme', 'Personal']
 titles = ['Cold War (k=2)', 'EuroVoc (k=4)', 'UN Geoscheme (k=4)', 'Personal classification (k=6)']
 
 for ax, column, title, cmap in zip(axes, columns, titles, custom_cmaps):
-    europe_clusters.boundary.plot(ax=ax, linewidth=1, edgecolor='#171717')
+    europe_clusters.boundary.plot(ax=ax, linewidth=.3, edgecolor='#171717')
     europe_clusters.plot(column=column, ax=ax, legend=False, categorical=True, cmap=cmap,
                          missing_kwds={"color": "lightgrey"})
     bbox = (-20, 33, 50, 72)  # Limit the bounding box of the plot to Europe (minx, miny, maxx, maxy)
     ax.set_xlim(bbox[0], bbox[2])
     ax.set_ylim(bbox[1], bbox[3])
-    ax.set_title(title, fontsize=30, fontweight='semibold', color = '#171717')
+    ax.set_title(title, fontsize=30, fontweight='semibold', color='#171717')
     ax.axis('off')
     ax.grid(False)
 
 # Customize the overall plot
 plt.suptitle('Pre-existing definitions of European regional divisions',
-             fontsize=50, fontweight='semibold', x=0.02, ha='left', color = '#171717', y = 0.98)
+             fontsize=50, fontweight='semibold', x=0.02, ha='left', color='#1D5B79', y=0.98)
 plt.tight_layout()
 plt.subplots_adjust(top=0.95)
 plt.savefig('viz/division_maps.png')  # Save the figure
